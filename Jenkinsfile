@@ -1,44 +1,26 @@
 pipeline {
     agent any
 
-    stages {
+    parameters {
+        choice(
+            name: 'ENVIRONMENT',
+            choices: ['DEV', 'TEST', 'PROD'],
+            description: 'Select deployment environment'
+        )
+    }
 
-        stage('Hello') {
-            steps {
-                echo 'webhook auto build test2'
-            }
-        }
+    stages {
 
         stage('Build') {
             steps {
-                echo 'Build stage is running'
-            }
-        }
-
-        stage('Test') {
-            steps {
-                echo 'Test stage is running'
+                echo 'Build is running'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo 'Deploy stage is running'
+                echo "Deploying to ${params.ENVIRONMENT}"
             }
-        }
-    }
-
-    post {
-        success {
-            echo 'Pipeline completed successfully!'
-        }
-
-        failure {
-            echo 'Pipeline failed!'
-        } //webhook test
-
-        always {
-            echo 'Pipeline execution finished.'
         }
     }
 }
