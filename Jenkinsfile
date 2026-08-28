@@ -5,7 +5,7 @@ pipeline {
 
         stage('Hello') {
             steps {
-                echo 'webhook test successfully'
+                echo 'webhook auto build test'
             }
         }
 
