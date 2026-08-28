@@ -30,6 +30,13 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Build is running'
+                script {
+    try {
+        sh 'some-command'
+    } catch (err) {
+        echo 'Error handled successfully'
+    }
+}
             }
         }
 
