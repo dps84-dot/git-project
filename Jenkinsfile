@@ -12,7 +12,18 @@ pipeline {
     environment {
         APP_NAME = 'MyApplication'
     }
+   stage('Deploy to PROD') {
 
+    when {
+        expression {
+            params.ENVIRONMENT == 'PROD'
+        }
+    }
+
+    steps {
+        echo 'Deploying to Production'
+    }
+}
     
     stages {
 
