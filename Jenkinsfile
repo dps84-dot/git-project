@@ -30,56 +30,45 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Build is running'
+
                 script {
-    try {
-        sh 'some-command'
-    } catch (err) {
-        echo 'Error handled successfully'
-        retry(3) {
-    sh 'echo "Trying command..."'
-            sh '''
-    echo "Build Report" > report.txt
-'''
+                    try {
+                        sh 'some-command'
+                    } catch (err) {
+                        echo 'Error handled successfully'
 
-archiveArtifacts artifacts: 'report.txt',
-                  fingerprint: true
-}
-    }
-}
-            }
-        }
-      stage('Testing') {
-    parallel {
+                        retry(3) {
+                            sh 'echo "Trying command..."'
+                        }
 
-        stage('Unit Test') {
-            steps {
-                echo 'Unit Test running'
+                        sh '''
+                            echo "Build Report" > report.txt
+                        '''
+
+                        archiveArtifacts artifacts: 'report.txt',
+                                          fingerprint: true
+                    }
+                }
             }
         }
 
-        stage('Security Test') {
-            steps {
-                echo 'Security Test running'
-            }
-        }
-    }
-}
         stage('Testing') {
-    parallel {
+            parallel {
 
-        stage('Unit Test') {
-            steps {
-                echo 'Unit Test running'
+                stage('Unit Test') {
+                    steps {
+                        echo 'Unit Test running'
+                    }
+                }
+
+                stage('Security Test') {
+                    steps {
+                        echo 'Security Test running'
+                    }
+                }
             }
         }
 
-        stage('Security Test') {
-            steps {
-                echo 'Security Test running'
-            }
-        }
-    }
-}
         stage('Deploy') {
             steps {
                 echo "Deploying to ${params.ENVIRONMENT}"
