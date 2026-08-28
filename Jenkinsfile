@@ -33,21 +33,19 @@ pipeline {
 
                 script {
                     try {
-                        sh 'some-command'
+                        retry(3) {
+                            sh 'some-command'
+                        }
                     } catch (err) {
                         echo 'Error handled successfully'
-
-                        retry(3) {
-                            sh 'echo "Trying command..."'
-                        }
-
-                        sh '''
-                            echo "Build Report" > report.txt
-                        '''
-
-                        archiveArtifacts artifacts: 'report.txt',
-                                          fingerprint: true
                     }
+
+                    sh '''
+                        echo "Build Report" > report.txt
+                    '''
+
+                    archiveArtifacts artifacts: 'report.txt',
+                                      fingerprint: true
                 }
             }
         }
@@ -72,6 +70,19 @@ pipeline {
         stage('Deploy') {
             steps {
                 echo "Deploying to ${params.ENVIRONMENT}"
+            }
+        }
+
+        stage('Approval') {
+            when {
+                expression {
+                    params.ENVIRONMENT == 'PROD'
+                }
+            }
+
+            steps {
+                input message: 'Deploy to Production?',
+                      ok: 'Proceed'
             }
         }
 
