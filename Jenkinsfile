@@ -13,14 +13,7 @@ pipeline {
         APP_NAME = 'MyApplication'
     }
 
-    stages {
-        stage('Build') {
-            steps {
-                echo "Building ${APP_NAME}"
-            }
-        }
-    }
-}
+    
     stages {
 
         stage('Build') {
