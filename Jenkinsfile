@@ -37,6 +37,12 @@ pipeline {
         echo 'Error handled successfully'
         retry(3) {
     sh 'echo "Trying command..."'
+            sh '''
+    echo "Build Report" > report.txt
+'''
+
+archiveArtifacts artifacts: 'report.txt',
+                  fingerprint: true
 }
     }
 }
