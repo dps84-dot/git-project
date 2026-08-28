@@ -8,6 +8,9 @@ pipeline {
             description: 'Select deployment environment'
         )
     }
+    environment {
+    APP_NAME = 'MyApplication'
+}
 
     stages {
 
