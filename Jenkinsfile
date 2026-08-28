@@ -8,7 +8,7 @@ pipeline {
             description: 'Select deployment environment'
         )
     }
-    
+
     environment {
         APP_NAME = 'MyApplication'
     }
@@ -21,6 +21,14 @@ pipeline {
         }
     }
 }
+    stages {
+
+        stage('Build') {
+            steps {
+                echo 'Build is running'
+            }
+        }
+
         stage('Deploy') {
             steps {
                 echo "Deploying to ${params.ENVIRONMENT}"
