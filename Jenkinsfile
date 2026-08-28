@@ -5,7 +5,7 @@ pipeline {
 
         stage('Hello') {
             steps {
-                echo 'Hello from Jenkins'
+                echo 'webhook test successfully'
             }
         }
 
