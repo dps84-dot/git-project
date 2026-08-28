@@ -1,5 +1,16 @@
 pipeline {
     agent any
+    stage('Linux Commands') {
+    steps {
+        sh '''
+            echo "Current directory:"
+            pwd
+
+            echo "Files:"
+            ls -la
+        '''
+    }
+}
 
     parameters {
         choice(
