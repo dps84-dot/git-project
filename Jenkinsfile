@@ -64,6 +64,22 @@ archiveArtifacts artifacts: 'report.txt',
         }
     }
 }
+        stage('Testing') {
+    parallel {
+
+        stage('Unit Test') {
+            steps {
+                echo 'Unit Test running'
+            }
+        }
+
+        stage('Security Test') {
+            steps {
+                echo 'Security Test running'
+            }
+        }
+    }
+}
         stage('Deploy') {
             steps {
                 echo "Deploying to ${params.ENVIRONMENT}"
