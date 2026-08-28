@@ -74,12 +74,6 @@ pipeline {
         }
 
         stage('Approval') {
-            when {
-                expression {
-                    params.ENVIRONMENT == 'PROD'
-                }
-            }
-
             steps {
                 input message: 'Deploy to Production?',
                       ok: 'Proceed'
@@ -87,12 +81,6 @@ pipeline {
         }
 
         stage('Deploy to PROD') {
-            when {
-                expression {
-                    params.ENVIRONMENT == 'PROD'
-                }
-            }
-
             steps {
                 echo 'Deploying to Production'
             }
