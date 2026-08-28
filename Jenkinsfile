@@ -35,6 +35,9 @@ pipeline {
         sh 'some-command'
     } catch (err) {
         echo 'Error handled successfully'
+        retry(3) {
+    sh 'echo "Trying command..."'
+}
     }
 }
             }
